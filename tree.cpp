@@ -70,7 +70,7 @@ void Tree::insertion_fixup(Node *node, Tree *tree) {
         }
 
         else { // went right
-            if (node->parent->parent->left->color == RED) {
+            if (node->parent->parent->left->color == RED) { // verify left uncle
                 node->parent->color = BLACK;
                 node->parent->parent->left->color = BLACK;
                 node->parent->parent->color = RED;
@@ -81,16 +81,15 @@ void Tree::insertion_fixup(Node *node, Tree *tree) {
                     rightRotation(node, tree);
                 }
                 node->parent->color = BLACK; //made parent black
-                node->parent->parent->color = RED; //made parent red
+                node->parent->parent->color = RED; //made grandparent red
                 leftRotation(node->parent->parent, tree);
             }
         }
     }
-
     tree->root->color = BLACK;
 }
 
-void Tree::rightRotation(Node *node, Tree *tree) { // recebendo 77;77   
+void Tree::rightRotation(Node *node, Tree *tree) { 
     Node *temp = node->left;
     node->left = temp->right;
     if (temp->right != tree->NIL)
@@ -121,7 +120,7 @@ void Tree::leftRotation(Node *node, Tree *tree) {
         tree->root = temp;
     else if (node == node->parent->left)
         node->parent->left = temp;
-    else //se foi pra esquerda
+    else
         node->parent->right = temp;
     
     temp->left  = node;
@@ -152,16 +151,16 @@ void Tree::preOrderPrint(Tree *tree, Node *node) {
 
 void Tree::inOrderPrint(Tree *tree, Node *node) {
     if (node != tree->NIL) {
-        preOrderPrint(tree, node->left);
+        inOrderPrint(tree, node->left);
         cout << node->item.value << ":" << node->color << ":" << node->parent->item.value << " ";
-        preOrderPrint(tree, node->right);
+        inOrderPrint(tree, node->right);
     }
 }
 
 void Tree::postOrderPrint(Tree *tree, Node *node) {
     if (node != tree->NIL) {
-        preOrderPrint(tree, node->left);
-        preOrderPrint(tree, node->right);
+        postOrderPrint(tree, node->left);
+        postOrderPrint(tree, node->right);
         cout << node->item.value << ":" << node->color << ":" << node->parent->item.value << " ";
     }
 }

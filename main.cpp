@@ -3,6 +3,7 @@
 void TreeOperations(int *toInsert, int toInsertSize) {
     Tree tree;
     Tree *root = tree.initialize();
+    Node *temp;
     Item item;
 
     cout << "Showing insertion process: " << endl;
@@ -14,6 +15,9 @@ void TreeOperations(int *toInsert, int toInsertSize) {
     }
     tree.preOrderPrint(root, root->root);
     cout << endl;
+    item.value = 99;
+    tree.search(&root->root, &temp, item);
+    tree.preOrderPrint(root, temp);
 }
 
 int main() {
